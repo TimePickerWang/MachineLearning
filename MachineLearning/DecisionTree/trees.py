@@ -44,14 +44,14 @@ Output:划分结果最好（划分后信息增益最高）的特征索引
 def choose_best_feature_to_split(data_set):
     feature_num = len(data_set[0]) - 1  # 特征的个数
     m = len(data_set)  # 向量个数
-    base_entropy = calc_shannonEnt(data_set)  # 划分之前数据的香农熵
+    base_entropy = calc_shannonEnt(data_set)  # 经验熵
     best_info_gain = 0.0  # 最好的信息增益值
     best_feature = -1  # 划分后信息增益最高的特征索引值
     for i in range(feature_num):
         # 数据集中所有第i个特征的值存到feat_list中
         feat_list = [example[i] for example in data_set]
         unique_feat = set(feat_list)
-        new_entropy = 0.0  # 划分之后的香农熵
+        new_entropy = 0.0  # 条件熵
         for feature in unique_feat:
             #  根据第i个特征划分数据
             sub_data_set = split_dataSet(data_set, i, feature)
