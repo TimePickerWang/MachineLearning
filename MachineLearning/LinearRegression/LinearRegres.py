@@ -18,7 +18,7 @@ def load_data(filename):
     return x_mat, y_mat
 
 
-# 计算关系数相
+# 计算相关系数
 def calc_coefficient(y_hyp, y_true):
     """
     param y_hyp: 预测标签
@@ -26,7 +26,7 @@ def calc_coefficient(y_hyp, y_true):
 
     return: 关系数相
     """
-    r = np.corrcoef(y_hyp, y_true)
+    r = np.corrcoef(y_hyp, y_true)[0, 1]
     return r
 
 

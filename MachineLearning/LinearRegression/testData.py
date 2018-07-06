@@ -11,6 +11,7 @@ x_sort.sort(0)  # 排序是为了绘图
 # y_hyp = x_sort * w
 # print(lr.calc_coefficient((x_mat * w).T, y_mat.T))  # 打印相关系数
 
+
 y_hyp = lr.lwlr(x_sort, x_mat, y_mat, k=0.01)  # 利用局部加权线性回归
 
 
