@@ -45,6 +45,7 @@ def stand_est(data_set, user, sim_meas, item):
         return rat_sim_total / sim_total
 
 
+# 利用svd分解矩阵后进行推荐
 def svd_est(data_set, user, sim_meas, item):
     n = data_set.shape[1]
     sim_total = 0.0
@@ -57,7 +58,7 @@ def svd_est(data_set, user, sim_meas, item):
         if user_rating == 0:
             continue
         else:
-            similarity = sim_meas(xformed_items[item, :].T, xformed_items[j, :].T)
+            similarity = sim_meas(xformed_items[item, :], xformed_items[j, :])
         sim_total += similarity
         rat_sim_total += similarity * user_rating
     if sim_total == 0:
@@ -78,23 +79,18 @@ def recommend(data_set, user, n=3, sim_meas=cos_sim, es_method=stand_est):
     return sorted(item_scores, key=lambda item_score: item_score[1], reverse=True)[:n]
 
 
-
-
 def loadExData():
-    data = [[2, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
-            [0, 0, 0, 0, 4, 0, 0, 1, 0, 4, 0],
-            [3, 3, 4, 0, 3, 0, 0, 2, 2, 0, 0],
-            [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 5, 0, 0, 5, 0],
-            [4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 5],
-            [0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4],
-            [0, 0, 0, 0, 0, 0, 5, 0, 0, 5, 0],
-            [0, 0, 0, 3, 0, 0, 0, 0, 4, 5, 0],
-            [1, 1, 2, 1, 1, 2, 1, 0, 4, 5, 0]]
+    data = [[4, 4, 0, 2, 2],
+            [4, 0, 0, 3, 3],
+            [4, 0, 0, 1, 1],
+            [1, 1, 1, 2, 0],
+            [2, 2, 2, 0, 0],
+            [5, 5, 5, 0, 0],
+            [1, 1, 1, 0, 0]]
     return np.asarray(data)
 
 
 data = loadExData()
 u, sigma, vt = np.linalg.svd(data)
-print(recommend(data, 1, sim_meas=cos_sim, es_method=svd_est))
+print(recommend(data, 2, sim_meas=cos_sim, es_method=svd_est))
+print(recommend(data, 2, sim_meas=cos_sim, es_method=stand_est))
