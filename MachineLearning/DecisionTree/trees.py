@@ -9,13 +9,13 @@ Output:香农熵的值
 '''
 def calc_shannonEnt(data_set):
     m = len(data_set)
-    lable_counts = {}
+    label_counts = {}
     for featVec in data_set:
-        current_lable = featVec[-1]
-        lable_counts[current_lable] = lable_counts.get(current_lable, 0) + 1
+        current_label = featVec[-1]
+        label_counts[current_label] = label_counts.get(current_label, 0) + 1
     shannon_ent = 0
-    for key in lable_counts:
-        prob = float(lable_counts[key])/m
+    for key in label_counts:
+        prob = float(label_counts[key])/m
         shannon_ent -= prob * log(prob, 2)
     return shannon_ent
 
@@ -44,14 +44,14 @@ Output:划分结果最好（划分后信息增益最高）的特征索引
 def choose_best_feature_to_split(data_set):
     feature_num = len(data_set[0]) - 1  # 特征的个数
     m = len(data_set)  # 向量个数
-    base_entropy = calc_shannonEnt(data_set)  # 经验熵
+    base_entropy = calc_shannonEnt(data_set)  # 划分之前数据的香农熵
     best_info_gain = 0.0  # 最好的信息增益值
     best_feature = -1  # 划分后信息增益最高的特征索引值
     for i in range(feature_num):
         # 数据集中所有第i个特征的值存到feat_list中
         feat_list = [example[i] for example in data_set]
         unique_feat = set(feat_list)
-        new_entropy = 0.0  # 条件熵
+        new_entropy = 0.0  # 划分之后的香农熵
         for feature in unique_feat:
             #  根据第i个特征划分数据
             sub_data_set = split_dataSet(data_set, i, feature)
@@ -97,9 +97,9 @@ def creat_tree(data_set, labels):
     feature_values = [example[best_feature] for example in data_set]
     unique_feature = set(feature_values)
     for value in unique_feature:
-        sub_lables = labels[:]
+        sub_labels = labels[:]
         my_tree[best_feature_label][value] = creat_tree(
-            split_dataSet(data_set, best_feature, value), sub_lables)
+            split_dataSet(data_set, best_feature, value), sub_labels)
     return my_tree
 
 
@@ -116,10 +116,10 @@ def classify(input_tree, feat_labels, test_vec):
     for key in second_dict.keys():
         if test_vec[feat_index] == key:
             if type(second_dict[key]).__name__ == 'dict':
-                class_lable = classify(second_dict[key], feat_labels, test_vec)
+                class_label = classify(second_dict[key], feat_labels, test_vec)
             else:
-                class_lable = second_dict[key]
-    return class_lable
+                class_label = second_dict[key]
+    return class_label
 
 
 '''    
@@ -136,7 +136,7 @@ def store_tree(input_tree, filename = "./testTree.txt"):
 '''    
 Input: filename: 需要读取的文件名
 
-Output: 决策树字典
+Output: 决策树的字典
 '''
 def grab_tree(filename = "./testTree.txt"):
     fr = open(filename, "rb")
@@ -173,5 +173,5 @@ def classify_test_data():
     print("分类结果：" + classify(tree, labels, test_vec2))
 
 
-# test_fun()
-# classify_test_data()
+test_fun()
+classify_test_data()
