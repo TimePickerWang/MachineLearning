@@ -24,7 +24,7 @@
 
 ## 3. PCA
 
-#### 红色为原始数据，绿色维降维结果
+#### 红色为原始数据，绿色为降维结果
 
 ![image](https://github.com/TimePickerWang/MachineLearningInAction/blob/master/MachineLearning/PCA/pic/pca_testSet.png?raw=true)
 
