@@ -1,9 +1,6 @@
-Machine Learning in Action学习笔记，一个文件夹代表一个算法，每个文件夹包含算法所需的数据集、源码和图片，图片放在pic文件夹中，数据集放在在Data文件夹内。书中的代码是python2的，有不少错误，这里代码是我用python3写的，且都能直接运行
-
-
 以下是部分实验结果图片
 
-## 1. K-means
+## 1. K-means（绿色代表聚类中心）
 
 ![image](https://github.com/TimePickerWang/MachineLearningInAction/blob/master/MachineLearning/KMeans/pic/kMeans_testSet_clustered.png?raw=true)
 
